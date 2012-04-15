@@ -2,8 +2,11 @@ var can,con;
 
 var tileMap = [];
 
-var MAP_SIZE_X = 20;
-var MAP_SIZE_Y = 20;
+var MAP_SIZE_X = 120;
+var MAP_SIZE_Y = 120;
+
+var SCREEN_TILESPAN_X = 24;
+var SCREEN_TILESPAN_Y = 18;
 
 var SCREEN_WIDTH = 640;
 var SCREEN_HEIGHT = 480;
@@ -38,17 +41,18 @@ function render(){
 	con.fillStyle = "#888";
 	con.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 	
+    //Transform map (zoom and move camera around)
     con.translate(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-	con.scale(can.width / 24 * camera.zoom,can.height / 18 * camera.zoom);
+	con.scale(can.width / SCREEN_TILESPAN_X * camera.zoom,can.height / SCREEN_TILESPAN_Y * camera.zoom);
 	con.translate(-camera.x,-camera.y);
 	
     //Find the minimum and maximum X for the tiles we need to display
-    var minx = camera.x - (SCREEN_WIDTH/MAP_SIZE_X)/2 * (1/camera.zoom);
-    var maxx = camera.x + (SCREEN_WIDTH/MAP_SIZE_X)/2 * (1/camera.zoom);
+    var minx = camera.x - (SCREEN_WIDTH/SCREEN_TILESPAN_X)/2 * (1/camera.zoom);
+    var maxx = camera.x + (SCREEN_WIDTH/SCREEN_TILESPAN_Y)/2 * (1/camera.zoom);
     
     //Find the minimum and maximum Y for the tiles we need to display
-    var miny = camera.y - (SCREEN_HEIGHT/MAP_SIZE_Y)/2 * (1/camera.zoom);
-    var maxy = camera.y + (SCREEN_HEIGHT/MAP_SIZE_Y)/2 * (1/camera.zoom);
+    var miny = camera.y - (SCREEN_HEIGHT/SCREEN_TILESPAN_X)/2 * (1/camera.zoom);
+    var maxy = camera.y + (SCREEN_HEIGHT/SCREEN_TILESPAN_Y)/2 * (1/camera.zoom);
     
     //Make sure the max & min x do not go negative or exceed tiles
     minx = ((minx > 0) && Math.floor(minx)) || 0;
