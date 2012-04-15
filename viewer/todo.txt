@@ -1,0 +1,3 @@
+ - Use images for tiles
+ - Only draw tiles on screen
+ - Doodads
