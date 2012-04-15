@@ -1,0 +1,31 @@
+body{
+	
+}
+#contextMenu{
+	width:250px;
+	background-color:#fff;
+	border:2px #888 solid;
+	position:absolute;
+	display:none;
+}
+#name{
+	width:400px;
+	height:50px;
+}
+#description{
+	width:400px;
+	height:200px;
+}
+.contextMenuItem{
+	width:240px;
+	height:20px;
+	font-size:12px;
+	text-align:center;
+	background-color:#ccc;
+	padding:5px;
+	padding-top:10px;
+}
+.contextMenuItem:hover{
+	cursor:pointer;
+	background-color:#9934cb;
+}

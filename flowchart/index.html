@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>FLOWCHART</title>
+		<script src='jquery.js'></script>
+		<script src='events.js'></script>
+		<script src='bubble.js'></script>
+		<script src='main.js'></script>
+		<style>
+			body{
+				font-family: 'Press Start 2P', cursive;
+			}
+		</style>
+		<link href='main.css' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+	</head>
+	<body valign='top'>
+		<div id='contextMenu'>
+			<div id='createBubble' class='contextMenuItem'>Crate Boobles</div>
+			<div id='addChild' class='contextMenuItem'>Add Child</div>
+			<div id='addParent' class='contextMenuItem'>Add Parent</div>
+			<div id='removeAttachment' class='contextMenuItem'>Remove Attachment</div>
+		</div>
+		<table>
+			<tr>
+				<td>
+					<canvas id='can'></canvas>
+				</td>
+				<td valign='top'>
+					<textarea id='name'></textarea>
+					<textarea id='description'></textarea>
+				</td>
+			</tr>
+			<tr/>
+		</table>
+	</body>
+</html>
