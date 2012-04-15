@@ -27,7 +27,9 @@ function init(){
 	con = can.getContext("2d");
 	
 	addEvents();
-	
+    
+    
+	//TODO this should load a tilemap, not generate one
 	generateTileMap();
 	
 	setInterval(update,1000/60);
@@ -83,4 +85,7 @@ function generateTileMap(){
 		tileMap.push(ar);
 	}
 }
-window.onload = init; //Remove this when combined with game/map editor
+window.onload = function(){
+    //Load assets, then call init
+    assets.load(init);
+}; //Remove this when combined with game/map editor
