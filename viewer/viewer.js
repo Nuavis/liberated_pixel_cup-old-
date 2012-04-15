@@ -2,8 +2,8 @@ var can,con;
 
 var tileMap = [];
 
-var MAP_SIZE_X = 120;
-var MAP_SIZE_Y = 120;
+var MAP_SIZE_X = 200;
+var MAP_SIZE_Y = 200;
 
 var SCREEN_TILESPAN_X = 24;
 var SCREEN_TILESPAN_Y = 18;
