@@ -14,7 +14,7 @@ var SCREEN_HEIGHT = 480;
 
 //[ [ 0 , 0 , 0 ] , [ 0 , 1 , 0 ] , [ 0 , 0 , 0 ] ]
 
-var camera = {x:0,y:0,zoom:1,speed:.05};
+var camera = {x:0,y:0,zoom:1,speed:.2};
 
 function init(){
 	document.body.style.margin = "0px";
@@ -71,8 +71,8 @@ function render(){
 };
 
 function update(){
-	camera.x += (getKey("a") - getKey("d"))*-camera.speed;
-	camera.y += (getKey("w") - getKey("s"))*-camera.speed;
+	camera.x += (getKey("d") - getKey("a"))*camera.speed/camera.zoom;
+	camera.y += (getKey("s") - getKey("w"))*camera.speed/camera.zoom;
     camera.zoom += (getKey("up") - getKey("down"))/20;
 }
 
