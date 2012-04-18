@@ -2,8 +2,8 @@ var can,con;
 
 var tileMap = [];
 
-var MAP_SIZE_X = 200;
-var MAP_SIZE_Y = 200;
+var MAP_SIZE_X = 120;
+var MAP_SIZE_Y = 120;
 
 var SCREEN_TILESPAN_X = 24;
 var SCREEN_TILESPAN_Y = 18;
@@ -17,20 +17,7 @@ var SCREEN_HEIGHT = 480;
 var camera = {x:0,y:0,zoom:1,speed:.2};
 
 function init(){
-	document.body.style.margin = "0px";
-	document.body.style.padding = "0px";
-	document.body.style.borderSpacing = "0px";
-	
-	can = document.getElementById("can");
-	can.width = SCREEN_WIDTH;
-	can.height = SCREEN_HEIGHT;
-	con = can.getContext("2d");
-	
 	addEvents();
-    
-    
-	//TODO this should load a tilemap, not generate one
-	generateTileMap();
 	
 	setInterval(update,1000/60);
 	setInterval(render,1000/60);
@@ -39,7 +26,8 @@ function render(){
 	//Draw Grid
 	//con.clear();
 	con.setTransform(1,0,0,1,0,0);
-	
+	con.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+    
 	con.fillStyle = "#888";
 	con.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 	
@@ -65,7 +53,7 @@ function render(){
     maxy = ((maxy+1 < MAP_SIZE_Y) && Math.ceil(maxy)) || MAP_SIZE_Y;
 	for (var x = minx;x<maxx;x++){
 		for (var y = miny;y<maxy;y++){
-			tileFunction[tileMap[x][y]](x,y);
+			con.drawImage(mapgen.tiles[x][y],x,y,1,1);
 		}
 	}
 };
@@ -80,12 +68,24 @@ function generateTileMap(){
 	for (var i = 0;i<MAP_SIZE_X; i++){
 		var ar = [];
 		for (var u = 0;u<MAP_SIZE_Y;u++){
-			ar.push(1-Math.round(Math.pow(Math.random(),4)));
+			//ar.push(Math.round(Math.pow(Math.random(),4)));
+            ar.push(Math.round(Math.pow(Math.random(),1)));
 		}
 		tileMap.push(ar);
 	}
 }
 window.onload = function(){
-    //Load assets, then call init
-    assets.load(init);
+    document.body.style.margin = "0px";
+	document.body.style.padding = "0px";
+	document.body.style.borderSpacing = "0px";
+	
+	can = document.getElementById("can");
+	can.width = SCREEN_WIDTH;
+	can.height = SCREEN_HEIGHT;
+	con = can.getContext("2d");
+    //TODO this should load a tilemap, not generate one
+	generateTileMap();
+    new mapgen.Tile("grass",0x00FF00,0);
+    new mapgen.Tile("dirt",0x784800,1,16);
+    mapgen.generate(tileMap,init);
 }; //Remove this when combined with game/map editor

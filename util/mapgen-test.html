@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>util mapgen test</title>
+        <script>
+            var projectroot = "../";
+        </script>
+        <script src='../viewer/events.js'></script>
+        <script src='mapgen.js'></script>
+        <script>
+        var can,con;
+        // Based on viewer.js:generateTileMap()
+        function generateTileMap(MAP_SIZE_X,MAP_SIZE_Y){
+            var map = [];
+            for (var i = 0;i<MAP_SIZE_X; i++){
+                var ar = [];
+                for (var u = 0;u<MAP_SIZE_Y;u++){
+                    ar.push(Math.round(Math.pow(Math.random(),4)));
+                }
+                map.push(ar);
+            }
+            return map;
+        }
+        window.onload = function(){
+                can = document.getElementById("can");
+                can.width = 1200;
+                can.height = 800;
+                con = can.getContext('2d');
+                con.scale(50,50);
+                con.fillStyle = '#000';
+                con.fillRect(0,0,1200,800);
+                new mapgen.Tile("grass",0x00FF00,0);
+                new mapgen.Tile("dirt",0x784800,1,16);
+                mapgen.generate(generateTileMap(20,20),function(){
+                    function render(){
+                        for (var i = 0;i<mapgen.tiles.length;i++){
+                            for (var u = 0;u<mapgen.tiles[0].length;u++){
+                                con.drawImage(mapgen.tiles[i][u],i,u,1,1);
+                            }
+                        }
+                    }
+                    function update(){
+                        con.translate(getKey('a')-getKey('d'),getKey('w') - getKey('s'));
+                    }
+                    addEvents();
+                    setInterval(render,1000/60);
+                    setInterval(update,1000/60);
+                });
+        };
+        </script>
+	</head>
+	<body align='center'>
+		<canvas id='can'></canvas>
+	</body>
+</html>
