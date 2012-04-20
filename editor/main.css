@@ -1,0 +1,49 @@
+body{
+    margin:0px;
+    padding:0px;
+    border-spacing:0px;
+    overflow:hidden;
+    font-family: 'Oxygen';
+}
+.menu-button{
+    display: inline-block;
+    width:60px;
+    text-align:center;
+    vertical-align:middle;
+    padding-top:5px;
+    height:25px;
+    border-spacing:0px;
+    border-right:1px #ddd solid;
+    background-color:#eee;
+    font-size:14px;
+}
+.menu-button:hover{
+    background-color: #ddd;
+    cursor: pointer;
+}
+#editor-container{
+    border: solid 1px #ddd;
+}
+#menu-button-container{
+    background-color:#eee;
+    font-size:0px;
+}
+#editor-contents{
+    background-color:#f4f4f4;
+    height:100%;
+    border-top:solid 1px #ddd;
+}
+#properties-container{
+    display:inline-block;
+    border-left:solid 1px #ddd;
+    padding:2px;
+    height:100%;
+    vertical-align:top;
+}
+#canvas-container{
+    width:75%;
+    background-color:#fff;
+    display:inline-block;
+    height:100%;
+    vertical-align:top;
+}
