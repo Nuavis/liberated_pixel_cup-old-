@@ -1,31 +1,52 @@
-var objectView = new function(objectName){
-    
+var objectView = function(objectName){
+    this.objectName = objectName;
+    this.props = mod.object[objectName];
+    this.loadImage(this.props.image);
+    this.init();
 };
 objectView.create = function(){
-    alert("CREATING OBJECt");
+    //Prompt for name and image
+    var iw = new ui.InputWindow("Create new object");
+    iw.addField("Name",ui.TextField);
+    iw.addField("Image",ui.AssetField);
+    iw.addField("Category",ui.TextField);
+    iw.complete(function(ob){
+        mod.object[ob.Name] = {
+            "image":ob.Image,
+            "category":ob.Category
+        };
+        addView(new objectView(ob.Name));
+    });
 };
 objectView.open = function(){
     //Prompt for selection of object to edit
-    var sw = new ui.SelectionWindow();
+    var sw = new ui.SelectionWindow("Select an object to edit");
     for (var item in mod.object){
         sw.addItem(item,mod.object[item].image);
     }
     sw.complete(function(selectedItem){
         //Load the selected item
-        alert(selectedItem);
+        addView(new objectView(selectedItem));
     });
 };
 objectView.prototype = {
-    data:null,
     image:null,
     imageData:null,
     props:null,
     camera:{x:0,y:0,zoom:1,speed:5},
     init:function(){
+        var me = this;
         events.mouseScroll = function(e){
-            this.camera.zoom *= (e.delta > 0) && 7/6 || 6/7;
+            me.camera.zoom *= (e.delta > 0) && 7/6 || 6/7;
             render();
         };
+        
+        //Add various editable properties to the properties container
+        var c = $("#properties-container");
+        //clear the container
+        c.html("");
+        c.append(ui.Labeled("Category",ui.TextField()));
+        
         this.camera.x = can.width/2;
         this.camera.y = can.height/2;
     },
@@ -73,11 +94,12 @@ objectView.prototype = {
         }
     },
     loadImage:function(imgName){
+        var self = this;
         var img = this.image = new Image();
         img.onload = function(){
             //Extend image, fit for editting
             con.drawImage(img,0,0);
-            this.imageData = con.getImageData(0,0,img.width,img.height);
+            self.imageData = con.getImageData(0,0,img.width,img.height);
             render();
         };
         img.src = "/assets/" + imgName;

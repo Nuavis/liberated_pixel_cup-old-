@@ -1,4 +1,4 @@
-var can,con,view,menu,mod;
+var can,con,view,menu,mod,views;
 
 var menub = [];
 function init(){
@@ -19,6 +19,9 @@ function init(){
             }
         }
     };
+    
+    //Initialize Variables
+    views = [];
     
     //Load module (the mod your editing)
     loadModule();
@@ -50,6 +53,10 @@ function init(){
     for (var button in menu){
         $("#menu-button-"+button).click(action);
     }
+    $("#editor-contents").click(function(){
+        ui.closeMenus();
+        menub = [];
+    });
     
     addEvents();
     
@@ -63,6 +70,11 @@ function loadModule(module){
     $.get("/assets/mods/"+module+"/object.json",function(data){
         mod.object = JSON.parse(data);
     });
+}
+function addView(v){
+    //Add v (view) to views, then make it the current view
+    views.push(v);
+    view = v;
 }
 function render(){
     con.fillStyle = "#fff";

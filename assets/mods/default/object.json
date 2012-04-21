@@ -3,6 +3,6 @@
         "name":"Example Object",
         "category":"Misc",
         "image":"dirt.png",
-        "collision":null
+        "origin":{"x":0,"y":0}
     }
 }

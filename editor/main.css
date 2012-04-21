@@ -37,6 +37,101 @@ body{
     background-color:#eee;
     cursor:pointer;
 }
+.window{
+    background-color:#fff;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:75%;
+    height:75%;
+    border:1px #ccc solid;
+}
+.window-overlay{
+    background-color:#000;
+    opacity:.25;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+}
+.window-titlebar{
+    background-color:#eee;
+    border-bottom:1px #ddd solid;
+    color:#888;
+    padding:5px;
+}
+.window-titlebar-x{
+    float:right;
+    cursor:pointer;
+}
+.window-titlebar-x:hover{
+    opacity:.5;
+}
+.window-selection{
+    width:100%;
+    padding-left:1px;
+    overflow:auto;
+}
+.window-selection-item{
+    padding:5px;
+    border-bottom:1px #ddd solid;
+    margin-left:5px;
+    padding-left:20px;
+}
+.window-selection-item:hover{
+    border-left:5px solid #ccc;
+    margin-left:0px;
+    cursor:pointer;
+    background-color:#eee;
+}
+.window-submit{
+    width:200px;
+    background-color:#eee;
+    border-top:1px solid #ddd;
+    text-align:right;
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+.ui-button{
+    width:80px;
+    height:25px;
+    border:1px #ccc solid;
+    text-align:center;
+    border-radius:4px;
+    margin:5px;
+    padding:5px;
+    padding-top:8px;
+    color:#444;
+    background-color:#fff;
+    display:inline-block;
+}
+.ui-button:hover{
+    background-color:#ddd;
+    cursor:pointer;
+}
+.ui-input{
+    min-height:40px;
+    border-bottom:1px solid #ccc;
+    margin-left:10px;
+    padding-left:10px;
+}
+.ui-input:hover{
+}
+.ui-text{
+    display:inline-block;
+    color:#444;
+}
+.ui-textfield{
+    display:inline-block;
+    min-width:150px;
+    padding:5px;
+    border:1px solid #ccc;
+    margin:5px;
+    border-radius:4px;
+    background-color:#fff;
+}
 #editor-container{
     border: solid 1px #ddd;
 }
@@ -50,10 +145,10 @@ body{
     border-top:solid 1px #ddd;
 }
 #properties-container{
-    display:inline-block;
     border-left:solid 1px #ddd;
     padding:2px;
     height:100%;
+    min-width:250px;
     vertical-align:top;
 }
 #canvas-container{
