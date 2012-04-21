@@ -1,0 +1,8 @@
+{
+    "example":{
+        "name":"Example Object",
+        "category":"Misc",
+        "image":"dirt.png",
+        "collision":null
+    }
+}
