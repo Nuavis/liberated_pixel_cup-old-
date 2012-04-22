@@ -2,7 +2,6 @@
     "example":{
         "name":"Example Object",
         "category":"Misc",
-        "image":"dirt.png",
-        "origin":{"x":0,"y":0}
+        "image":"dirt.png"
     }
 }

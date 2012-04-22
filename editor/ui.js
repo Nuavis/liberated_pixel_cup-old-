@@ -120,6 +120,9 @@ var ui = {
         for (var i = 0,len = ui.menus.length;i<len;i++){
             ui.menus[i].destroy();
         }
+    },
+    closeLastMenu:function(){
+        ui.menus.pop().destroy();
     }
 }
 ui.Menu.prototype = {

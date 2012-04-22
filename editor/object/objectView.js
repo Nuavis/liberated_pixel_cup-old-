@@ -7,11 +7,13 @@ var objectView = function(objectName){
 objectView.create = function(){
     //Prompt for name and image
     var iw = new ui.InputWindow("Create new object");
+    iw.addField("ID",ui.TextField);
     iw.addField("Name",ui.TextField);
     iw.addField("Image",ui.AssetField);
     iw.addField("Category",ui.TextField);
     iw.complete(function(ob){
-        mod.object[ob.Name] = {
+        mod.object[ob.ID] = {
+            "name":ob.Name,
             "image":ob.Image,
             "category":ob.Category
         };
@@ -38,14 +40,16 @@ objectView.prototype = {
         var me = this;
         events.mouseScroll = function(e){
             me.camera.zoom *= (e.delta > 0) && 7/6 || 6/7;
-            render();
+            promptRender();
         };
         
         //Add various editable properties to the properties container
         var c = $("#properties-container");
         //clear the container
         c.html("");
+        c.append(ui.Labeled("Name",ui.TextField()));
         c.append(ui.Labeled("Category",ui.TextField()));
+        c.append(ui.Labeled("Origin",ui.Button("Select")));
         
         this.camera.x = can.width/2;
         this.camera.y = can.height/2;
@@ -85,12 +89,35 @@ objectView.prototype = {
             con.closePath();
             con.stroke();
         }
+        if (view.mode && (view.mode.type == "select" || view.mode.type == "select_fixed")){
+            //Highlight the group of blocks under cursor
+            var m = {
+                x:mouse.x - $("#canvas").offset().left,
+                y:mouse.y - $("#canvas").offset().top
+            };
+            con.globalAlpha = .5;
+            con.fillStyle = "#888";
+            var sqz = view.mode.size * squareSize;
+            var sqs = (view.mode.type == "select_fixed" && sqz) || squareSize;
+            con.fillRect(
+                util.toNearest(
+                    m.x,sqs)+(camera.x%sqs)-sqz/2,
+                util.toNearest(
+                    m.y,sqs)+(camera.y%sqs)-sqz/2,
+                sqz,sqz);
+            con.globalAlpha = 1;
+        }
     },
     update:function(){
-        this.camera.x += (getKey("a") - getKey("d")) * this.camera.speed;
-        this.camera.y += (getKey("w") - getKey("s")) * this.camera.speed;
-        if (getKey("a")==1 | getKey("d")==1 | getKey("w")==1 | getKey("s")==1){
-            render();
+        if (lastElementClicked == can){
+            this.camera.x += (getKey("a") - getKey("d")) * this.camera.speed;
+            this.camera.y += (getKey("w") - getKey("s")) * this.camera.speed;
+            if (getKey("a")==1 | getKey("d")==1 | getKey("w")==1 | getKey("s")==1){
+                promptRender();
+            }
+        }
+        if (view.mode){
+            promptRender();
         }
     },
     loadImage:function(imgName){
@@ -100,8 +127,15 @@ objectView.prototype = {
             //Extend image, fit for editting
             con.drawImage(img,0,0);
             self.imageData = con.getImageData(0,0,img.width,img.height);
-            render();
+            promptRender();
         };
         img.src = "/assets/" + imgName;
+    },
+    promptSelectBlock:function(size,callback){
+        view.mode = {
+            type:"select_fixed",
+            size:size,
+            callback:callback
+        };
     }
 };

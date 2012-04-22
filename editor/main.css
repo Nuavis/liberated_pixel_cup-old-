@@ -16,6 +16,7 @@ body{
     border-right:1px #ddd solid;
     background-color:#eee;
     font-size:14px;
+    color:#444;
 }
 .menu-button:hover{
     background-color: #ddd;
@@ -26,12 +27,15 @@ body{
     background-color:#fff;
     border:1px solid #ccc;
     position:absolute;
+    border-radius:5px;
 }
 .context-menu-item{
     height:30px;
     padding-left:20px;
+    padding-top:6px;
     border-top:1px solid #eee;
     border-bottom:none;
+    color:#444;
 }
 .context-menu-item:hover{
     background-color:#eee;

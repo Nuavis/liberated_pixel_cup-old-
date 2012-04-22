@@ -14,5 +14,8 @@ var util = {
         if (distance<route.length)
             return util.travel(object[route[distance]],route,distance+1);
         return object;
+    },
+    toNearest:function(x,n){
+        return Math.round(x/n)*n;
     }
 };

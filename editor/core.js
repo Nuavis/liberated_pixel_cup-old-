@@ -1,4 +1,5 @@
 var can,con,view,menu,mod,views;
+var lastElementClicked,renderPrompted;
 
 var menub = [];
 function init(){
@@ -12,10 +13,14 @@ function init(){
     menu = {
         "file":{
             "new":{
-                "object":objectView.create
+                "object":objectView.create,
+                "level":console.log,
+                "map":console.log
             },
             "open":{
-                "object":objectView.open
+                "object":objectView.open,
+                "level":console.log,
+                "map":console.log
             }
         }
     };
@@ -28,7 +33,14 @@ function init(){
     
     //Add menu events
     var action = function(){
+        while (this.stackPosition < menub.length){
+            menub.pop();
+            ui.closeLastMenu();
+        }
+        
+        //Add to menu navigation stack
         menub.push(this.id.split("-")[2]);
+        
         var ob = util.travel(menu,menub);
         if (typeof ob == "function"){
             //The user has selected the final option
@@ -43,20 +55,29 @@ function init(){
                 ((menub.length == 1) && $(this).offset().top + $(this).outerHeight() )||
                     $(this).offset().top+$(this).outerHeight()/2
             );
-            $(this).css("background-color","#eee");
+            //$(this).css("background-color","#eee");
             for (var item in ob){
                 contextMenu.addItem(item,"menu-button-"+item);
+                $("#menu-button-"+item)[0].stackPosition = menub.length;
                 $("#menu-button-"+item).click(action);
             }
         }
     };
     for (var button in menu){
+        $("#menu-button-"+button)[0].stackPosition = 0;
         $("#menu-button-"+button).click(action);
     }
     $("#editor-contents").click(function(){
         ui.closeMenus();
         menub = [];
     });
+    
+    
+    //add event for lastElementClicked
+    //this is for determining focus
+    $(document).click(function(e){
+        lastElementClicked = e.target;
+    }); 
     
     addEvents();
     
@@ -84,8 +105,15 @@ function render(){
     if (view)
         view.render();
 }
+function promptRender(){
+    renderPrompted = true;
+}
 function update(){
     if (view)
         view.update();
+    if (renderPrompted){
+        renderPrompted = false;
+        render();
+    }
 }
 $(window).load(init);
